@@ -114,6 +114,50 @@ setInterval(slideTime , 3000)
 
 
 
+//card switcher
+const card = document.querySelector('.card')
+const btnPrev = document.querySelector('#btn-prev')
+const btnNext = document.querySelector('#btn-next')
+let count = 0
+
+const requestFetch = async () => {
+    try{
+        const response = await fetch(`http://jsonplaceholder.typicode.com/todos/${count}`)
+        const data = await response.json()
+        card.innerHTML = `
+            <p>${data.title}</p>
+            <p>${data.completed}</p>
+            <span>${data.id}</span>
+            `
+    }catch (e) {
+        console.log(e)
+    }
+}
+btnNext.onclick = () => {
+    if (count++ && count >= 201){
+        count = 1
+    }
+    requestFetch()
+}
+btnPrev.onclick = () => {
+    if (count-- && count <= 0){
+        count = 200
+    }
+    requestFetch()
+}
+
+const getPosts = async () => {
+    try {
+        const response = await fetch( 'https://jsonplaceholder.typicode.com/posts' )
+        const data = await response.json()
+        console.log('posts', data)
+    }catch (e) {
+        alert('ERROR')
+    }
+}
+getPosts()
+
+
 //XMLHttpRequest запрос на json
 
 const request = new XMLHttpRequest()
@@ -124,5 +168,17 @@ request.onload = () => {
     const data = JSON.parse(request.response)
     console.log(data)
 }
+
+//fetch запрос
+const getAsyncDate = async () => {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const data = await response.json()
+        console.log(data)
+    }catch (e){
+        console.error(e)
+    }
+}
+getAsyncDate()
 
 

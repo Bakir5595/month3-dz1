@@ -170,15 +170,19 @@ request.onload = () => {
 }
 
 //fetch запрос
-const getAsyncDate = async () => {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-        const data = await response.json()
-        console.log(data)
-    }catch (e){
-        console.error(e)
-    }
+
+const getAsyncDate = () => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data, 'fetch');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
-getAsyncDate()
+
+getAsyncDate();
+
 
 

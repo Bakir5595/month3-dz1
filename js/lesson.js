@@ -11,6 +11,56 @@ phoneButton.onclick = () => {
          
     }
 }
+//convert
+
+const som = document.querySelector('#som');
+const usd = document.querySelector('#usd');
+const eur = document.querySelector('#eur');
+
+const fetchData = async () => {
+    try {
+        const response = await fetch("../data/convertor.json");
+        console.log(response)
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+};
+
+const convert = async (elem, target, target2) => {
+    elem.oninput = async () => {
+        try {
+            const response = await fetchData();
+
+            target.forEach(e => {
+                if (target2 === 'som') {
+                    e.value = (elem.value / response[e.id]).toFixed(2);
+                } else if (e === som) {
+                    e.value = (elem.value * response[elem.id]).toFixed(2);
+                } else {
+                    e.value = ((elem.value * response[elem.id]) / response[e.id]).toFixed(2);
+                }
+            });
+
+            if (elem.value === '') {
+                target.forEach(e => e.value = '');
+                elem.value === '' && (target.forEach(e => e.value = ''));
+            }
+        } catch (error) {
+            console.error("Conversion error:", error);
+        }
+    };
+};
+
+convert(som, [usd, eur]);
+convert(usd, [som, eur]);
+convert(eur, [som, usd]);
+
+
+
 
 //TAB SLIDER
 const tabContent = document.querySelectorAll('.tab_content_block')

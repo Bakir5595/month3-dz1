@@ -61,3 +61,18 @@ const slideTime = () =>{
 }
 
 setInterval(slideTime , 3000)
+
+
+
+//XMLHttpRequest запрос на json
+
+const request = new XMLHttpRequest()
+request.open('GET', '../data/persons.json', )
+request.setRequestHeader('Content-type', 'application/json')
+request.send()
+request.onload = () => {
+    const data = JSON.parse(request.response)
+    console.log(data)
+}
+
+

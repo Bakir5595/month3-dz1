@@ -11,3 +11,11 @@ phoneButton.onclick = () => {
          
     }
 }
+
+const tapContentBlocks = document.querySelector('.tab_content_block')
+
+const hidetTapContentBlocks = () => {
+    tapContentBlocks.forEach((item) => {
+        item.style.display = 'none'
+    })
+}
